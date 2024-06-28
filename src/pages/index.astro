@@ -10,44 +10,14 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
 	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, I am Basant Besra!</h1>
-			<p>
-				With 9 years of extensive experience in software development, I
-				have mastered a diverse technology stack, including Vue.js,
-				React.js for front-end development, and Node.js, Laravel for the
-				back-end, alongside significant work with WordPress, Drupal, and
-				Golang. My skill set not only covers the development of
-				intuitive, responsive user interfaces and robust, scalable web
-				solutions but also extends to the efficient application of
-				Golang for system and web applications that require high
-				performance and scalability.
-			</p>
-
-			<p>
-				In addition to my development expertise, I am well-versed in
-				software architecture and design patterns, enabling me to
-				construct systems that are resilient, scalable, and
-				future-proof. My proficiency with DevOps tools such as
-				Kubernetes and Ansible further amplifies my ability to
-				streamline deployment processes and ensure high availability
-				across projects, marking a significant contribution to the
-				operational efficiency and reliability of the development
-				workflow.
-			</p>
-			<p>
-				My career is marked by a strategic, holistic approach to web
-				development, where I leverage my technical insight and
-				innovative thinking to overcome complex challenges and deliver
-				projects that align with strategic business objectives. This
-				comprehensive blend of technical skills, strategic insight, and
-				a commitment to excellence has driven the successful completion
-				of numerous projects, underscoring my dedication to advancing
-				organizational goals and technological innovation.
-			</p>
-		</main>
-		<Footer />
+	<body class="min-h-screen">
+		<div class="container-fluid min-h-screen flex flex-col">
+			<Header />
+			<main class="w-3/4 mx-auto flex-1 flex flex-col justify-center">
+				<h1 class="text-8xl">Hello, I am Basant Besra!</h1>
+				<h2 class="text-6xl">A full-stack developer.</h2>
+			</main>
+			<Footer />
+		</div>
 	</body>
 </html>
