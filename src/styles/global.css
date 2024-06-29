@@ -73,10 +73,10 @@ b {
 	font-weight: 700;
 }
 a {
-	color: var(--accent);
+	@apply text-teal-500;
 }
 a:hover {
-	color: var(--accent);
+	@apply text-teal-600;
 }
 p {
 	margin-bottom: 1em;
