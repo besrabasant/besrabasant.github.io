@@ -84,11 +84,11 @@ const posts = (await getCollection('blog')).sort(
 	</head>
 	<body>
 		<Header />
-		<main class="w-1/2 mx-auto py-6">
+		<main class="w-1/2 mx-auto pt-6 pb-24">
 			<section>
 				<ul>
 					{
-						posts.map((post) => (
+						posts.sort((a, b) => (new Date(b.data.pubDate) - new Date(a.data.pubDate))).map((post) => (
 							<li>
 								<a href={`/blog/${post.slug}/`}>
 									<img width={720} height={360} src={post.data.heroImage} alt="" />
