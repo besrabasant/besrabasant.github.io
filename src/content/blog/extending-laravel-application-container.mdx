@@ -1,0 +1,92 @@
+---
+title: Extending Laravel's Application Container
+description: Extending Laravel's Application Container
+pubDate: 'may 11 2018'
+heroImage: '/laravel.png'
+showToc: true
+---
+
+It's seldom that we need to extend Laravel's core, and even when we do, it's most likely we're going to extend specific components, which is [detailed in the docs](https://laravel.com/docs/5.6/container#extending-bindings).
+
+However, all of these instructions presume you're using the core Laravel Application ([IOC Container](https://laravel.com/docs/5.6/container#introduction)) to extend the other classes. What if you want to extend the Application itself?
+
+So, let's do it. Let's take a Laravel 5 application, extend its Application, and change its `/storage` path to be `/localstorage`.
+
+## Extend it
+
+First, create an application class somewhere in your namespace, and have it extend `Illuminate\Foundation\Application`. For example:
+
+```php
+<?php namespace MyLaravelApp;
+
+class Application extends \Illuminate\Foundation\Application
+{
+}
+```
+
+## Register it
+
+Now, let's find where `Illuminate\Foundation\Application` is bound. Thankfully, it's simple: `bootstrap/app.php`. The first non-comment code in the file is:
+
+```php
+$app = new Illuminate\Foundation\Application(
+    realpath(__DIR__.'/../')
+);
+```
+
+I think you can guess what's coming next. Just replace those lines with these:
+
+```php
+$app = new MyLaravelApp\Application(
+    realpath(__DIR__.'/../')
+);
+```
+
+That's it. We're now using our custom *Application* everywhere through the site.
+
+## Override (extend) your methods
+
+So, if our goal is to override the functionality in Application that provides the location for the `storage` directory, the final step is to find that functionality and override it.
+
+Thankfully again, a quick glance through the `Illuminate\Foundation\Application` class makes that very clear: there's a method named `storagePath`:
+
+```php
+/**
+ * Get the path to the storage directory.
+ *
+ * @return string
+ */
+ public function storagePath()
+ {
+     return $this->basePath.'/storage';
+ }
+```
+
+… so, let's do our business. In our custom Application, let's override that method:
+
+```php
+<?php 
+
+namespace MyLaravelApp;
+
+class Application extends \Illuminate\Foundation\Application
+{
+    /**
+     * Get the path to the storage directory.
+     *
+     * @return string
+     */
+    public function storagePath()
+    {
+        return $this->basePath.'/localstorage';
+    }
+}
+```
+
+and done. We've now just customized this path. And, *of course*, we can use this same set of steps to extend anything else that the Application class provides to Laravel.
+
+## Conclusion
+
+That's it! I hope this gives you the freedom and power to take more control of your Laravel-based web sites, and also the encouragement to go look around the core even more to learn how everything works.
+
+Happy Coding!
