@@ -74,10 +74,10 @@ const posts = (await getCollection('blog')).sort(
 			<section>
 				<ul class="flex flex-wrap m-0 p-0 list-none gap-8">
 					{
-						posts.map((post) => (
+						posts.map((post, index) => (
 							<li>
 								<a class="block" href={`/blog/${post.slug}/`}>
-									<img width={720} height={360} class="mb-6 rounded-2xl" src={post.data.heroImage} alt="" />
+									<img width={720} height={360} class="mb-6 rounded-2xl  object-cover aspect-[2/1]" src={post.data.heroImage} alt="" />
 									<h4 class="title">{post.data.title}</h4>
 									<p class="date">
 										<FormattedDate date={post.data.pubDate} />
