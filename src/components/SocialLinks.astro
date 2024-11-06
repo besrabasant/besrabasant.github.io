@@ -1,4 +1,12 @@
-<div class="social-links">
+---
+interface Props {
+	hideOnMobile?: boolean;
+}
+
+const { hideOnMobile = false } = Astro.props;
+---
+
+<div class={`social-links ${ hideOnMobile? 'social-links--hide-on-mobile': '' }`}>
     <a href="https://x.com/basantbesra" target="_blank">
         <span class="sr-only">Go to Basant Besra's X account</span>
 
@@ -104,8 +112,10 @@
     .social-links a {
         display: flex;
     }
+
+    
     @media (max-width: 720px) {
-        .social-links {
+        .social-links.social-links--hide-on-mobile {
             display: none;
         }
     }
