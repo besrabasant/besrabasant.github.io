@@ -1,0 +1,27 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="min-h-screen">
+		<div class="container-fluid min-h-screen flex flex-col">
+			<Header />
+			<main class="w-3/4 mx-auto flex-1 flex flex-col justify-center">
+				<h2 class="text-primary font-bold text-teal-500 hover:text-teal-600">
+					Sorry! 
+				</h2>
+				<p class="text-3xl">
+					The page you are looking for does not exists. Let's <a href="/blog">find something else</a> for you.
+				</p>
+			</main>
+			<Footer />
+		</div>
+	</body>
+</html>
