@@ -1,0 +1,51 @@
+---
+title: Create aliases for your classes in Laravel
+description: Create aliases for your classes in Laravel
+pubDate: 'May 30 2018'
+heroImage: '/posts/alias.png'
+showToc: true
+---
+
+Hello web artisans,
+
+You might have heard of [Laravel](https://laravel.com/) *Class Alias* feature. If you haven’t, here’s a brief description about them. Laravel comes with a feature called ,*Class Alias*, using which you can create an alias for any [Class](http://php.net/manual/en/language.oop5.basic.php) you have created. If you look into the *app.php* file inside the *config* folder of  any Laravel installation, you will see an array at the bottom of the file named aliases which contains an array of *Aliases* as keys and your [*Namespaced Classes*](http://php.net/manual/en/language.namespaces.rationale.php) as values.
+
+```php
+'aliases' => [
+       'App'=> Illuminate\Support\Facades\App::class,
+       'Artisan'=> Illuminate\Support\Facades\Artisan::class,
+       'Auth'=> Illuminate\Support\Facades\Auth::class,
+       'Blade'=> Illuminate\Support\Facades\Blade::class,
+       'Broadcast'=> Illuminate\Support\Facades\Broadcast::class
+       ........
+]
+```
+
+Now, using this feature, whenever you want to reference your class anywhere in your project, you have to just call the *alias* and not the whole *Namspaced ClassName*. For example, if you have a class named **HelloWorld** in your *Package*,
+then you can add an alias for your class just like the example given below.
+
+```php
+'aliases' => [
+
+        'App'=> Illuminate\Support\Facades\App::class,
+        'Artisan'=> Illuminate\Support\Facades\Artisan::class,
+        'Auth'=> Illuminate\Support\Facades\Auth::class,
+        'Blade'=> Illuminate\Support\Facades\Blade::class,
+        'Broadcast'=> Illuminate\Support\Facades\Broadcast::class,
+        ........
+        'HelloWorld'=> YourPackage\Namespace\HelloWorld:class 
+]
+```
+
+
+Now, Keep in mind that if you want to use any function from your class, it has to be an static function. As you can see, the aliases already defined in Laravel refer to [*Facades*](https://laravel.com/docs/5.6/facades). In Laravel, **Facades** provides a static way to use instantiated classes. If you want to alias an instance of your class, you have to first [create a Facade](https://laravel.com/docs/5.0/facades#creating-facades) for your class.
+
+```php
+'aliases' => [
+        ........
+        'HelloWorld'=> YourPackage\Namespace\HelloWorldFacade:class, 
+]
+```
+I hope you might have enjoyed reading this piece and learned something new.
+
+Happy Coding!

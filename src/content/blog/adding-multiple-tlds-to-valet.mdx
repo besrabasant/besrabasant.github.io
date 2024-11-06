@@ -1,0 +1,52 @@
+---
+title: Adding Multiple tld's to valet
+description: Adding Multiple tld's to valet
+pubDate: 'August 05 2018'
+heroImage: '/posts/laravel-valet.png'
+showToc: true
+---
+
+So, all of us use some kind of local development setup. It may be **[LAMP](https://www.liquidweb.com/kb/what-is-a-lamp-stack/)**, **[WAMP](https://bitnami.com/stack/wamp)**(windows), **[XAMPP](https://en.wikipedia.org/wiki/XAMPP)**, **[Vagrant](https://en.wikipedia.org/wiki/Vagrant_(software))**, etc. I used to use **XAMPP** a lot, then I switched to **Vagrant** and now finally **[Valet](https://github.com/laravel/valet)**.
+After using **Valet**, I can say, it offers a great development experience. Local dev enviroment setup is a breeze with **Valet**. Just go to your project root and run `valet link` and you are good to go (You can find more in the docs [here](https://laravel.com/docs/master/valet)). Unluckily, the default project only supports [macOS](https://en.wikipedia.org/wiki/MacOS), but there are fork's of the project for other OSes also.
+
+- **[valet-linux](https://github.com/cpriego/valet-linux)** for Linux
+- **[valet-windows](https://github.com/cretueusebiu/valet-windows)** for Windows
+
+## Adding more than one tld
+
+
+So, by default, **Valet** serves your projects using the `.test`  [TLD](https://en.wikipedia.org/wiki/Top-level_domain), _i.e._ if you have a project named *example*, it will be served under `example.test`. You can obviously change the **tld** to anything you want using the command `valet domain <tld-name>`. But there's a catch. Valet let's you serve all your projects under one **tld** only. But what if you want your projects to be served under multiple **tld's**. Let's say, you want to have both `.test` and `.dev`. And later, you also want to add `.app`. So, here's a solution (more of like a hack) to add multiple **tld's** to valet.
+
+The *hosts* configuration for **Valet** saved in the file `/etc/dnsmasq.d/valet`. If you open that file, you will find an entry like
+
+```bash
+address=/.test/127.0.0.1
+```
+
+This tells **Valet** to resolve all `.test` domain names to `localhost`. Now, to add a second **tld**, you can either do 
+
+```bash
+address=/.test/.dev/127.0.0.1
+```
+
+or
+
+```bash
+address=/.test/127.0.0.1
+address=/.dev/127.0.0.1
+```
+
+This tells **Valet** to resolve both, `.test` and `.dev` domain names to `localhost`. 
+
+
+Next step, you have to restart **dnsmasq** (not **Valet**) by running the command `sudo service dnsmasq restart`. This reconfigures **dnsmasq** to accept your newly added **tld**.
+
+
+Now for last step, link your site with the new **tld** by running `valet link example.dev`. Do not forget to add the **tld** after the name. That's it.
+
+
+Now you can find your site served under both `example.test` and `example.dev`.
+
+**Note:-** For any site to be served under your new **tld**, add the **tld** to the domain name while running `valet link`.
+
+Happy Coding!!!
