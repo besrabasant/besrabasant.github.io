@@ -82,7 +82,12 @@ p {
 	margin-bottom: 1em;
 }
 .prose p {
-	margin-bottom: 2em;
+	@apply mb-6;
+}
+.prose h2,
+.prose h3,
+.prose h4 {
+	@apply mt-6;
 }
 textarea {
 	width: 100%;
@@ -111,7 +116,7 @@ pre {
 }
 
 pre.astro-code {
-	@apply mb-10;
+	@apply mb-6;
 }
 
 pre > code {
