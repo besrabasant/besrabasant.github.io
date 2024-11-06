@@ -54,19 +54,19 @@ h6 {
 	line-height: 1.2;
 }
 h1 {
-	font-size: 3.052em;
+	@apply text-4xl;
 }
 h2 {
-	font-size: 2.441em;
+	@apply text-[2rem];
 }
 h3 {
-	font-size: 1.953em;
+	@apply text-3xl;
 }
 h4 {
-	font-size: 1.563em;
+	@apply text-2xl;
 }
 h5 {
-	font-size: 1.25em;
+	@apply text-xl;
 }
 strong,
 b {
@@ -103,13 +103,20 @@ code {
 	padding: 2px 5px;
 	background-color: rgb(var(--gray-light));
 	border-radius: 2px;
+	@apply text-base;
 }
 pre {
 	padding: 1.5em;
 	border-radius: 8px;
 }
+
+pre.astro-code {
+	@apply mb-10;
+}
+
 pre > code {
 	all: unset;
+	@apply text-sm;
 }
 blockquote {
 	border-left: 4px solid var(--accent);
