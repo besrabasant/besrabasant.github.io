@@ -159,3 +159,28 @@ hr {
 	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
 	white-space: nowrap;
 }
+
+.layout--blog-post .prose ol {
+	list-style: auto;
+	@apply pl-4;
+}
+
+.layout--blog-post .prose ul {
+	list-style: disc;
+	@apply pl-4 mb-5;
+}
+
+.layout--blog-post .prose .astro-code {
+	@apply mb-10;
+}
+
+.layout--blog-post .prose h1,
+.layout--blog-post .prose h2,
+.layout--blog-post .prose h3,
+.layout--blog-post .prose h4,
+.layout--blog-post .prose h5,
+.layout--blog-post .prose h6 {
+	@apply font-bold;
+}
+
+

@@ -1,0 +1,156 @@
+---
+title: Annotating Functions and Features with Doc Tags in TypeScript
+description: Annotating Functions and Features with Doc Tags in TypeScript
+pubDate: 'December 14 2024'
+heroImage: '/posts/jsdoc.webp'
+showToc: true
+---
+
+When working on a growing TypeScript codebase, keeping track of when a function or feature 
+was introduced, or deprecated, is essential for maintainability. Proper documentation not 
+only helps developers understand your code but also aids in ensuring smooth upgrades and deprecations. 
+One of the most effective ways to achieve this is by using JSDoc annotations with appropriate tags. 
+This blog will guide you through how to annotate your TypeScript code to track versions for functions and features effectively.
+
+## Why Use Doc Tags for Version Tracking?
+
+
+When managing software with evolving versions, you might need to:
+
+- Indicate the version in which a function or feature was introduced (**@since**).
+- Mark features as deprecated and suggest alternatives (**@deprecated**).
+- Provide clear documentation that is readable by both humans and tools like IDEs and documentation generators.
+
+Using doc tags ensures consistency and clarity, making your code self-explanatory and easy to navigate.
+
+## JSDoc Basics
+
+JSDoc is a widely used tool for documenting JavaScript and TypeScript code. 
+By adding special annotations (tags) as comments, developers can provide metadata about functions, classes, and modules.
+
+Let’s explore how you can leverage these tags in TypeScript.
+
+### Annotating Functions with JSDoc Tags
+
+Here’s an example of how to annotate a function using **@since** and **@deprecated** tags:
+
+
+```typescript
+/**
+ * Computes the sum of two numbers.
+ *
+ * @param a - The first number.
+ * @param b - The second number.
+ * @returns The sum of `a` and `b`.
+ *
+ * @since 1.0.0
+ * @deprecated Since 2.0.0. Use `addNumbers` instead.
+ */
+function sum(a: number, b: number): number {
+  return a + b;
+}
+```
+
+#### Explanation:
+
+- **@since**: Indicates the version in which the function was introduced. This helps developers know when the feature became available.
+- **@deprecated**: Marks the function as deprecated, specifying the version and providing an alternative (addNumbers). 
+Most IDEs will display warnings when deprecated functions are used.
+
+### Annotating Features in Classes
+
+For more complex cases, such as features in a class, you can annotate methods and properties similarly. Here’s an example:
+
+```typescript
+class Calculator {
+  /**
+   * Multiplies two numbers.
+   *
+   * @param a - The first number.
+   * @param b - The second number.
+   * @returns The product of `a` and `b`.
+   *
+   * @since 1.2.0
+   */
+  multiply(a: number, b: number): number {
+    return a * b;
+  }
+
+  /**
+   * Divides two numbers.
+   *
+   * @param a - The numerator.
+   * @param b - The denominator.
+   * @returns The result of `a / b`.
+   *
+   * @since 1.0.0
+   * @deprecated Since 1.5.0. Use `safeDivide` for better error handling.
+   */
+  divide(a: number, b: number): number {
+    if (b === 0) {
+      throw new Error("Division by zero");
+    }
+    return a / b;
+  }
+}
+```
+
+#### Key Points:
+- Document each method with its respective version using **@since**.
+- When deprecating a method, provide an explanation and suggest alternatives to help developers transition smoothly.
+
+### Supporting IDEs and Tools
+
+1. **TypeScript-aware IDEs**:
+    - Most modern IDEs (like VSCode) highlight **@deprecated** functions with warnings.
+    - Hovering over a function displays metadata, such as **@since** and **@deprecated** tags, in tooltips.
+
+2. **Documentation Generators**:
+    - Tools like TypeDoc can generate comprehensive documentation, including version tags.
+    - These tools format @since and @deprecated tags for easy readability in generated outputs.
+
+<hr />
+### Additional Tags for Enhanced Documentation
+
+Here are some other JSDoc tags you might find useful:
+
+- **@example**: Provide usage examples for the function or method.
+```typescript
+/**
+ * Adds two numbers.
+ *
+ * @example
+ * addNumbers(2, 3); // 5
+ */
+function addNumbers(a: number, b: number): number {
+  return a + b;
+}
+```
+
+- **@see**: Link to related functions or documentation.
+```typescript
+/**
+ * Divides two numbers.
+ *
+ * @see {@link safeDivide}
+ */
+function divide(a: number, b: number): number {
+  return a / b;
+}
+```
+## Best Practices for Using JSDoc Tags
+
+1. Be Consistent: Ensure that every new function or feature includes **@since** tags.
+2. Provide Alternatives: For deprecated features, always suggest a replacement to guide users.
+3. Follow Semantic Versioning: Use a standard versioning format like 1.0.0 for clarity.
+4. Test with Documentation Generators: Validate your annotations with tools like TypeDoc to ensure they’re rendered correctly.
+
+## Conclusion
+
+Annotating functions and features with version-related doc tags in TypeScript is a simple but 
+powerful way to maintain a clear and consistent codebase. By leveraging tags 
+like **@since** and **@deprecated**, you can improve collaboration, streamline upgrades, and 
+ensure that your code remains future-proof. Start documenting your functions today and watch your team’s productivity soar!
+
+
+Happy Coding!!!
