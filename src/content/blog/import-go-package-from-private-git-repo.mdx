@@ -1,0 +1,129 @@
+---
+title: How to Import a Go Package from a Private Git Repository
+description: How to Import a Go Package from a Private Git Repository
+pubDate: 'December 28 2024'
+heroImage: '/posts/golang_cover_image.png'
+showToc: true
+---
+Working with private Git repositories in Go requires proper configuration to ensure smooth package 
+imports and module management. This blog outlines the steps you need to follow to import a Go 
+package from a private Git repository seamlessly.
+
+## 1. Prepare Git Access
+
+
+Before importing the package, ensure you have proper access to the private Git repository. 
+Depending on your authentication method:
+
+- **SSH Access**:
+    - Set up your SSH keys.
+    - Add the public key to your Git hosting provider (e.g., **GitHub**, **GitLab**).
+    - Verify access using:
+    ```sh
+    ssh -T git@github.com
+    ```
+
+- **HTTPS Access**:
+    - Generate a personal access token (**PAT**) from your Git hosting provider.
+    - Use a credential helper to manage HTTPS authentication.
+    ```sh
+    git config --global credential.helper store
+    ```
+
+## 2. Set Up the `GOPRIVATE` Environment Variable
+Go uses a proxy server to fetch public modules by default. For private repositories, 
+you need to tell Go to bypass the proxy by configuring the `GOPRIVATE` environment variable.
+
+**Example for a Single Domain**:
+
+```sh
+export GOPRIVATE=github.com/your-org
+```
+
+**Example for Multiple Domains**:
+
+```sh
+export GOPRIVATE=github.com/your-org,gitlab.com/your-org
+```
+
+Add this line to your shell configuration file (e.g., `.bashrc`, `.zshrc`) to make it permanent.
+
+
+## 3. Authenticate Git with Go
+
+Authentication is essential for Go to fetch private modules:
+
+- **For SSH**: Ensure your SSH keys are set up correctly and you can clone the repository manually using:
+```sh
+git clone git@github.com:your-org/your-repo.git
+```
+- **For HTTPS**: Use your username and PAT when prompted, or set up a credential helper:
+```sh
+git config --global credential.helper store
+```
+
+## 4. Import the Package in Your Code
+
+To use the private package in your project, import it using the module path defined in the repository’s `go.mod` file. For example:
+
+```go
+package main
+
+import (
+    "github.com/your-org/your-repo/package"
+)
+
+func main() {
+    package.SomeFunction()
+}
+```
+
+## 5. Fetch the Package
+
+Run the following command to fetch the package and add it to your project:
+```sh
+go get github.com/your-org/your-repo/package
+```
+This command downloads the module and updates your `go.mod` and `go.sum` files.
+
+## 6. Validate the Dependency
+
+After fetching the package, verify that it is correctly listed in your `go.mod` file:
+
+```sh
+require github.com/your-org/your-repo v1.2.3
+```
+
+## 7. Troubleshooting
+
+If you encounter issues, use these tips to debug:
+
+- **Check Configuration**: Ensure the `GOPRIVATE` variable is set correctly and includes the domain of your private repository.
+
+- **Verify Git Authentication**: Confirm that you can manually clone the repository using your preferred authentication method.
+
+- **Enable Verbose Logging**: Add verbose flags to the go get command to inspect errors:
+
+```sh
+GIT_SSH_COMMAND="ssh -v" go get -v github.com/your-org/your-repo/package
+```
+
+## 8. Clean Up
+
+After successfully importing the package, clean up your `go.mod` file to remove any unused dependencies:
+```sh
+go mod tidy
+```
+This command ensures your module file stays clean and up-to-date.
+
+## Conclusion
+
+By configuring the `GOPRIVATE` environment variable and setting up Git authentication, 
+you can seamlessly import and use Go packages from private repositories. These steps ensure 
+a secure and efficient workflow for managing private dependencies in your Go projects.
+
+Now you’re ready to integrate private modules into your Go applications with ease!
+
+<hr />
+
+Happy Coding!!!
